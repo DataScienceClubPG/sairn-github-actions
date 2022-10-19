@@ -1,0 +1,57 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches:
+    - 'main'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+    environment: prod
+
+    # Use the Bash shell regardless of the GitHub Actions runner
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Install the latest version of Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check
+
+    # Initialize a new or existing Terraform working directory
+    - name: Terraform Init
+      run: | 
+        terraform init \
+          -backend-config=sairn.tfbackend \
+          -backend-config=client_id=$ARM_CLIENT_ID \
+          -backend-config=client_secret=$ARM_CLIENT_SECRET \
+          -backend-config=subscription_id=$ARM_SUBSCRIPTION_ID \
+          -backend-config=tenant_id=$ARM_TENANT_ID
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan -input=false -out=plan.tfplan
+
+    # On push to "main", build infrastructure according to plan
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'
+      run: terraform apply -auto-approve -input=false plan.tfplan
