@@ -4,6 +4,9 @@ name: documentation
 on:
   #Allow this workflow to be used in other repositories
   - workflow_call
+  #Self-check of readme.md etc.
+  - push
+  - workflow_dispatch
 
 jobs:
   markdown-linter:
