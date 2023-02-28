@@ -1,0 +1,15 @@
+#terraform linter
+name: terraform-lint
+
+on: workflow_call 
+
+jobs:
+  delivery:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@main
+    - name: Lint Terraform
+      uses: actionshub/terraform-lint@main
