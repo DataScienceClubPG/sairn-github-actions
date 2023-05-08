@@ -1,6 +1,6 @@
 # This is a basic GitHub Actions pipeline to validate Terraform
 
-name: ' Validate Terraform code: '
+name: "Databricks Infrastructure Terraform Pipeline"
 
 on:
   workflow_call:
