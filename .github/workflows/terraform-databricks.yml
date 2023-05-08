@@ -71,6 +71,7 @@ jobs:
 
       - name: Check formatting of Terraform code
         id: fmt
+        shell: bash
         run: |
           terraform fmt -check
 
