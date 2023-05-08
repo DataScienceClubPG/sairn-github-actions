@@ -4,14 +4,12 @@ name: ' Validate Terraform code: '
 
 on:
   workflow_call:
-    secrets:
+    inputs:
       DATABRICKS_HOST:
         required: true
       DATABRICKS_ACCOUNT_ID:
         required: true
       ARM_CLIENT_ID:
-        required: true
-      ARM_CLIENT_SECRET:
         required: true
       ARM_SUBSCRIPTION_ID:
         required: true
@@ -24,6 +22,9 @@ on:
       BACKEND_CONTAINER_NAME:
         required: true
       BACKEND_KEY:
+        required: true
+    secrets:
+      ARM_CLIENT_SECRET:
         required: true
 
 defaults:
