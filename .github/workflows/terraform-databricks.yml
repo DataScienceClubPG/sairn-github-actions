@@ -32,6 +32,9 @@ on:
       BACKEND_KEY:
         required: true
         type: string
+      TERRAFORM_VERSION:
+        required: true
+        type: string
     secrets:
       ARM_CLIENT_SECRET:
         required: true
@@ -51,6 +54,7 @@ env:
   BACKEND_CONTAINER_NAME: ${{ inputs.BACKEND_CONTAINER_NAME }}
   BACKEND_KEY: ${{ inputs.BACKEND_KEY }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  TERRAFORM_VERSION: ${{ inputs.TERRAFORM_VERSION }}
 
 jobs:
   build:
@@ -65,7 +69,7 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2.0.0
         with:
-          terraform_version: '1.4.6'
+          terraform_version: $TERRAFORM_VERSION
 
       #      - name: Set up Databricks CLI profile for Terraform provider
       #        run: |
@@ -142,7 +146,7 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2.0.0
         with:
-          terraform_version: '1.4.6'
+          terraform_version: $TERRAFORM_VERSION
 
       #      - name: Set up Databricks CLI profile for Terraform provider
       #        run: |
