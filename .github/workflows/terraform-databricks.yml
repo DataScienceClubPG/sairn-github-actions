@@ -44,18 +44,16 @@ env:
   DATABRICKS_HOST: ${{ inputs.DATABRICKS_HOST }}
   DATABRICKS_ACCOUNT_ID: ${{ inputs.DATABRICKS_ACCOUNT_ID }}
   ARM_CLIENT_ID: ${{ inputs.ARM_CLIENT_ID }}
-  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_SUBSCRIPTION_ID: ${{ inputs.ARM_SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ inputs.ARM_TENANT_ID }}
   BACKEND_RG_NAME: ${{ inputs.BACKEND_RG_NAME }}
   BACKEND_SA_NAME: ${{ inputs.BACKEND_SA_NAME }}
   BACKEND_CONTAINER_NAME: ${{ inputs.BACKEND_CONTAINER_NAME }}
   BACKEND_KEY: ${{ inputs.BACKEND_KEY }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
 jobs:
   build:
-#    env:
-#      ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
@@ -84,7 +82,7 @@ jobs:
         id: init
         run: |
           terraform init \
-          -backend-config="resource_group_name=${{ inputs.BACKEND_RG_NAME }}" \
+          -backend-config="resource_group_name=$BACKEND_RG_NAME" \
           -backend-config="storage_account_name=$BACKEND_SA_NAME" \
           -backend-config="container_name=$BACKEND_CONTAINER_NAME" \
           -backend-config="key=$BACKEND_KEY"
