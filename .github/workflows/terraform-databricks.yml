@@ -179,7 +179,7 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform destroy -no-color -input=false --auto-approve -var-file=prod/terraform.tfvars
+        run: terraform apply -no-color -input=false --auto-approve -var-file=prod/terraform.tfvars
         continue-on-error: true
 
       - name: Terraform Apply Status
