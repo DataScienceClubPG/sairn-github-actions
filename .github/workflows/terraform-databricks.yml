@@ -34,7 +34,7 @@ on:
 
 defaults:
   run:
-    working-directory: examples/databricks-department-clusters-pat
+    working-directory: terraform
 
 env:
   DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
@@ -71,7 +71,6 @@ jobs:
 
       - name: Check formatting of Terraform code
         id: fmt
-        working-directory: ./terraform
         run: |
           terraform fmt -check
 
