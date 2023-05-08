@@ -54,6 +54,8 @@ env:
 
 jobs:
   build:
+    env:
+      ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
