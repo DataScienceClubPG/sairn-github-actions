@@ -7,22 +7,31 @@ on:
     inputs:
       DATABRICKS_HOST:
         required: true
+        type: string
       DATABRICKS_ACCOUNT_ID:
         required: true
+        type: string
       ARM_CLIENT_ID:
         required: true
+        type: string
       ARM_SUBSCRIPTION_ID:
         required: true
+        type: string
       ARM_TENANT_ID:
         required: true
+        type: string
       BACKEND_RG_NAME:
         required: true
+        type: string
       BACKEND_SA_NAME:
         required: true
+        type: string
       BACKEND_CONTAINER_NAME:
         required: true
+        type: string
       BACKEND_KEY:
         required: true
+        type: string
     secrets:
       ARM_CLIENT_SECRET:
         required: true
