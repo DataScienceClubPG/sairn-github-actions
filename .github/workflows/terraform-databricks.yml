@@ -41,21 +41,21 @@ defaults:
     working-directory: terraform
 
 env:
-  DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-  DATABRICKS_ACCOUNT_ID: ${{ secrets.DATABRICKS_ACCOUNT_ID }}
-  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  DATABRICKS_HOST: ${{ inputs.DATABRICKS_HOST }}
+  DATABRICKS_ACCOUNT_ID: ${{ inputs.DATABRICKS_ACCOUNT_ID }}
+  ARM_CLIENT_ID: ${{ inputs.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-  BACKEND_RG_NAME: ${{ secrets.BACKEND_RG_NAME }}
-  BACKEND_SA_NAME: ${{ secrets.BACKEND_SA_NAME }}
-  BACKEND_CONTAINER_NAME: ${{ secrets.BACKEND_CONTAINER_NAME }}
-  BACKEND_KEY: ${{ secrets.BACKEND_KEY }}
+  ARM_SUBSCRIPTION_ID: ${{ inputs.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ inputs.ARM_TENANT_ID }}
+  BACKEND_RG_NAME: ${{ inputs.BACKEND_RG_NAME }}
+  BACKEND_SA_NAME: ${{ inputs.BACKEND_SA_NAME }}
+  BACKEND_CONTAINER_NAME: ${{ inputs.BACKEND_CONTAINER_NAME }}
+  BACKEND_KEY: ${{ inputs.BACKEND_KEY }}
 
 jobs:
   build:
-    env:
-      ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID
+#    env:
+#      ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
