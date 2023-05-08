@@ -10,6 +10,37 @@ on:
     branches:
       - main
   workflow_call:
+    secrets:
+      DATABRICKS_HOST:
+        required: true
+        type: string
+      DATABRICKS_ACCOUNT_ID:
+        required: true
+        type: string
+      ARM_CLIENT_ID:
+        required: true
+        type: string
+      ARM_CLIENT_SECRET:
+        required: true
+        type: string
+      ARM_SUBSCRIPTION_ID:
+        required: true
+        type: string
+      ARM_TENANT_ID:
+        required: true
+        type: string
+      BACKEND_RG_NAME:
+        required: true
+        type: string
+      BACKEND_SA_NAME:
+        required: true
+        type: string
+      BACKEND_CONTAINER_NAME:
+        required: true
+        type: string
+      BACKEND_KEY:
+        required: true
+        type: string
 
 defaults:
   run:
@@ -17,7 +48,7 @@ defaults:
 
 env:
   DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+  DATABRICKS_ACCOUNT_ID: ${{ secrets.DATABRICKS_TOKEN }}
   ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -42,11 +73,11 @@ jobs:
         with:
           terraform_version: '1.0.11'
 
-      - name: Set up Databricks CLI profile for Terraform provider
-        run: |
-          echo "[DEFAULT]" >> ~/.databrickscfg
-          echo "host = $DATABRICKS_HOST" >> ~/.databrickscfg
-          echo "token = $DATABRICKS_TOKEN" >> ~/.databrickscfg
+      #      - name: Set up Databricks CLI profile for Terraform provider
+      #        run: |
+      #          echo "[DEFAULT]" >> ~/.databrickscfg
+      #          echo "host = $DATABRICKS_HOST" >> ~/.databrickscfg
+      #          echo "token = $DATABRICKS_TOKEN" >> ~/.databrickscfg
 
       - name: Check formatting of Terraform code
         id: fmt
@@ -119,11 +150,11 @@ jobs:
         with:
           terraform_version: '1.0.11'
 
-      - name: Set up Databricks CLI profile for Terraform provider
-        run: |
-          echo "[DEFAULT]" >> ~/.databrickscfg
-          echo "host = $DATABRICKS_HOST" >> ~/.databrickscfg
-          echo "token = $DATABRICKS_TOKEN" >> ~/.databrickscfg
+      #      - name: Set up Databricks CLI profile for Terraform provider
+      #        run: |
+      #          echo "[DEFAULT]" >> ~/.databrickscfg
+      #          echo "host = $DATABRICKS_HOST" >> ~/.databrickscfg
+      #          echo "token = $DATABRICKS_TOKEN" >> ~/.databrickscfg
 
       - name: Check formatting of Terraform code
         id: fmt
