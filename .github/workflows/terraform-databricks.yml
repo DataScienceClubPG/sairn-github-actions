@@ -5,9 +5,6 @@ name: "Databricks Terraform Infrastructure Pipeline"
 on:
   workflow_call:
     inputs:
-      DATABRICKS_HOST:
-        required: true
-        type: string
       DATABRICKS_ACCOUNT_ID:
         required: true
         type: string
@@ -44,7 +41,6 @@ defaults:
     working-directory: terraform
 
 env:
-  DATABRICKS_HOST: ${{ inputs.DATABRICKS_HOST }}
   DATABRICKS_ACCOUNT_ID: ${{ inputs.DATABRICKS_ACCOUNT_ID }}
   ARM_CLIENT_ID: ${{ inputs.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ inputs.ARM_SUBSCRIPTION_ID }}
@@ -71,12 +67,6 @@ jobs:
         with:
           terraform_version: $TERRAFORM_VERSION
 
-      #      - name: Set up Databricks CLI profile for Terraform provider
-      #        run: |
-      #          echo "[DEFAULT]" >> ~/.databrickscfg
-      #          echo "host = $DATABRICKS_HOST" >> ~/.databrickscfg
-      #          echo "token = $DATABRICKS_TOKEN" >> ~/.databrickscfg
-
       - name: Check formatting of Terraform code
         id: fmt
         run: |
@@ -100,35 +90,6 @@ jobs:
         run: terraform plan -no-color -input=false -var-file=prod/terraform.tfvars --var=client_secret=$ARM_CLIENT_SECRET
         continue-on-error: true
 
-#      - name: Update Pull Request
-#        uses: actions/github-script@v6.1.0
-#        env:
-#          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          script: |
-#            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-#            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-#            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-#            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-#
-#            <details><summary>Show Plan</summary>
-#
-#            \`\`\`\n
-#            ${process.env.PLAN}
-#            \`\`\`
-#
-#            </details>
-#
-#            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-#
-#            github.rest.issues.createComment({
-#              issue_number: context.issue.number,
-#              owner: context.repo.owner,
-#              repo: context.repo.repo,
-#              body: output
-#            })
-
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
@@ -147,12 +108,6 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.0
         with:
           terraform_version: $TERRAFORM_VERSION
-
-      #      - name: Set up Databricks CLI profile for Terraform provider
-      #        run: |
-      #          echo "[DEFAULT]" >> ~/.databrickscfg
-      #          echo "host = $DATABRICKS_HOST" >> ~/.databrickscfg
-      #          echo "token = $DATABRICKS_TOKEN" >> ~/.databrickscfg
 
       - name: Check formatting of Terraform code
         id: fmt
