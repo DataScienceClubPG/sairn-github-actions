@@ -49,8 +49,8 @@ env:
   BACKEND_SA_NAME: ${{ inputs.BACKEND_SA_NAME }}
   BACKEND_CONTAINER_NAME: ${{ inputs.BACKEND_CONTAINER_NAME }}
   BACKEND_KEY: ${{ inputs.BACKEND_KEY }}
-  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   TERRAFORM_VERSION: ${{ inputs.TERRAFORM_VERSION }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
 jobs:
   build:
@@ -87,7 +87,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -input=false -var-file=prod/terraform.tfvars --var=client_secret=$ARM_CLIENT_SECRET
+        run: terraform plan -no-color -input=false -var-file=prod/terraform.tfvars
         continue-on-error: true
 
       - name: Terraform Plan Status
@@ -129,7 +129,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -input=false -var-file=prod/terraform.tfvars --var=client_secret=$ARM_CLIENT_SECRET
+        run: terraform plan -no-color -input=false -var-file=prod/terraform.tfvars
         continue-on-error: true
 
       - name: Terraform Plan Status
@@ -138,7 +138,7 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -no-color -input=false --auto-approve -var-file=prod/terraform.tfvars --var=client_secret=$ARM_CLIENT_SECRET
+        run: terraform apply -no-color -input=false --auto-approve -var-file=prod/terraform.tfvars
         continue-on-error: true
 
       - name: Terraform Apply Status
