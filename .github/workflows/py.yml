@@ -2,12 +2,9 @@
 name: Python Code Quality
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  repository_dispatch:
+    types:
+      - lint-python
 
 jobs:
   linting:
