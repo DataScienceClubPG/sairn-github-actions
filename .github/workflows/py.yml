@@ -26,10 +26,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pylint==2.13.2
-          pip install flake8==3.10.0
-          pip install black==21.9b0
-          pip install mypy==0.910
+          pip install pylint
+          pip install flake8
+          pip install black
+          pip install mypy
 
       - name: Run pylint
         run: pylint ${{ inputs.directory }}
