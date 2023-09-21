@@ -2,9 +2,14 @@
 name: Python Code Quality
 
 on:
+  workflow_call:
   repository_dispatch:
     types:
       - lint-python
+
+permissions:
+  contents: read # git permissions to repo pull/push
+  statuses: write # read/write to repo custom statuses and checks
 
 jobs:
   linting:
