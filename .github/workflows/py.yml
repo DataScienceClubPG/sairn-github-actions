@@ -31,13 +31,16 @@ jobs:
           pip install black
       - name: pylint, flake8, and black
         run: |
-          set -e  # Exit immediately if a command exits with a non-zero status
 
-          # Run pylint
-          pylint **/*.py || true  # Use '|| true' to ensure the script doesn't exit
-
-          # Run flake8
-          flake8 || true
-
-          # Run black
-          black --diff . || true
+          # run linters
+          return_flag = 0;
+          if pylint **/*.py; then
+            return_flag = 1;
+          fi
+          if flake8; then
+            return_flag = 1;
+          fi
+          if black --diff .; then
+            return_flag = 1;
+          fi
+          exit ${return_flag}
