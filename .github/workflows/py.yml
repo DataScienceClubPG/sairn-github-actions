@@ -33,14 +33,4 @@ jobs:
         run: |
 
           # run linters
-          return_flag = 0;
-          if pylint **/*.py; then
-            return_flag = 1;
-          fi
-          if flake8; then
-            return_flag = 1;
-          fi
-          if black --diff .; then
-            return_flag = 1;
-          fi
-          exit ${return_flag}
+          pylint **/*.py || flake8 || black --diff .
