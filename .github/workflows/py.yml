@@ -29,11 +29,9 @@ jobs:
           pip install pylint
           pip install flake8
           pip install black
-  pylint:
-    run: pylint **/*.py
-
-  flake8:
-    run: flake8
-
-  black:
-    run: black --diff .
+      - name: pylint
+        run: pylint **/*.py
+      - name: flake8
+        run: flake8
+      - name: black
+        run: black --diff .
