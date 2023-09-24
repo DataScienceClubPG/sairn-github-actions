@@ -36,15 +36,18 @@ jobs:
           # Run pylint
           pylint **/*.py
 
+          exit_status=$?
           # Run flake8
           flake8
-
+          if [ $exit_status -ne 0 ]; then
+            exit_status=$?
+          fi
           # Run black
           black --diff .
-
+          if [ $exit_status -ne 0 ]; then
+            exit_status=$?
+          fi
           # Check the exit status of the previous commands
-          exit_status=$?
-
           # Re-enable exit on error
           set -e
 
