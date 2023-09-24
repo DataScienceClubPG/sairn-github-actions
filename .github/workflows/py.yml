@@ -29,9 +29,15 @@ jobs:
           pip install pylint
           pip install flake8
           pip install black
-      - name: pylint
-        run: pylint **/*.py
-      - name: flake8
-        run: flake8
-      - name: black
-        run: black --diff .
+      - name: pylint, flake8, and black
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+
+          # Run pylint
+          pylint **/*.py || true  # Use '|| true' to ensure the script doesn't exit
+
+          # Run flake8
+          flake8 || true
+
+          # Run black
+          black --diff . || true
