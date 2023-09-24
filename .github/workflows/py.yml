@@ -31,6 +31,25 @@ jobs:
           pip install black
       - name: pylint, flake8, and black
         run: |
+          set +e  # Disable exit on error temporarily
 
-          # run linters
-          pylint **/*.py || flake8 || black --diff .
+          # Run pylint
+          pylint **/*.py
+
+          # Run flake8
+          flake8
+
+          # Run black
+          black --diff .
+
+          # Check the exit status of the previous commands
+          exit_status=$?
+
+          # Re-enable exit on error
+          set -e
+
+          # Exit with the appropriate status
+          if [ $exit_status -ne 0 ]; then
+            echo "Linting or formatting checks failed"
+            exit 1
+          fi
