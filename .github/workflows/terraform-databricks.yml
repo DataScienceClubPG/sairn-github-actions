@@ -6,7 +6,7 @@ on:
   workflow_call:
     inputs:
       DATABRICKS_ACCOUNT_ID:
-        required: true
+        required: false
         type: string
       ARM_CLIENT_ID:
         required: true
